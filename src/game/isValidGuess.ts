@@ -1,0 +1,1 @@
+export const isValidGuess = (guess: string, base: number): boolean => {};

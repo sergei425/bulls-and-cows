@@ -6,7 +6,7 @@ export const evaluateGuess = (guess: string, secret: string): { bulls: number; c
   const guessDigitCount: Record<string, number> = {};
 
   guess.split('').forEach((digit, index) => {
-    if (digit === secret[index]) {
+    if (digit.toUpperCase() === secret[index].toUpperCase()) {
       bulls++;
     } else {
       secretDigitCount[secret[index]] = (secretDigitCount[secret[index]] || 0) + 1;
