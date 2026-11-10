@@ -14,6 +14,6 @@ describe('evaluateGuess', () => {
   });
 
   test('should handle repeated digits correctly', () => {
-    expect(evaluateGuess('1122', '1221')).toEqual({ bulls: 1, cows: 3 });
+    expect(evaluateGuess('1122', '1221')).toEqual({ bulls: 2, cows: 2 });
   });
 });
