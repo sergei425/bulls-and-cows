@@ -2,7 +2,7 @@
   "name": "bulls-and-cows",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "tsc -w",
     "lint": "eslint src --fix",
@@ -29,7 +29,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/sergei425/bulls-and-cows/issues"
   },
@@ -47,6 +46,7 @@
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
-    "typescript": "^7.0.2"
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }
