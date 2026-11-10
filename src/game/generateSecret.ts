@@ -1,0 +1,1 @@
+export const generateSecret = (length: number, base: number): string => {}

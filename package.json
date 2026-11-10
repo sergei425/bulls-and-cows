@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -w",
     "lint": "eslint src --fix",
     "format": "prettier --write 'src/**/*.{js,ts,tsx}'",
     "test": "jest",
@@ -16,7 +17,10 @@
     }
   },
   "lint-staged": {
-    "*.{ts,js}": ["eslint --fix", "prettier --write"]
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
