@@ -6,7 +6,7 @@ export const countPossibleSecrets = (length: number, base: number): number => {
     return memoizedCount.get(key)!;
   }
 
-  const count = Math.pow(base, length);
-  memoizedCount.set(key, count);
-  return count;
+  const result = length === 0 ? 1 : countPossibleSecrets(length - 1, base) * base;
+  memoizedCount.set(key, result);
+  return result;
 };
