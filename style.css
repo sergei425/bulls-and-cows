@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Inter sans-serif;
+    font-size: 16px;
+    color: #e4e7c8;
+    font-weight: 400;
+    background-color: #6e6b6e;
+}
+
+.container {
+    max-width: 1440px;
+    padding: 20px 16px;
+    margin: 0 auto;
+    box-sizing: inherit;
+}
+
+#setup-form {
+    display: flex;
+    gap: 25px;
+}
+
+#base-select,
+#length-input,
+#guess-input,
+button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    background-color: #c9bec9;
+    font-family: inherit;
+    font-size: 1.3rem;
+}
+
+#guess-input {
+  margin-right: 25px;
+}
+
+#history-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  list-style: none;
+
+  li {
+    padding: 0;
+    font-size: 1.2rem;
+    border-bottom: 2px solid;
+  }
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+#new-game {
+  position: absolute;
+  top: 25px;
+  right: 17%;
+}
+
