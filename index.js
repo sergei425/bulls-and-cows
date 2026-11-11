@@ -1,5 +1,3 @@
-//import { generateSecret } from './game/generateSecret';
-//import { evaluateGuess } from './game/evaluateGuess';
 export const generateSecret = (length, base, random = Math.random) => {
     const chars = '0123456789abcdef'.slice(0, base);
     const shuffled = Array.from({ length }, (_, i) => i % 2 ? chars[Math.floor(random() * chars.length)] : chars[Math.floor(random() * chars.length)]).sort(() => random() - 0.5);
@@ -26,6 +24,34 @@ export const evaluateGuess = (guess, secret) => {
     });
     return { bulls, cows };
 };
+export const createDigitValidator = (
+  base
+) => {
+    console.log(base)
+  const chars = '0123456789abcdef'.slice(0, base);
+  return (char) => {
+    return chars.includes(char.toLowerCase()) && char.length === 1;
+  } 
+}
+
+const memoizedCount = new Map();
+
+export const countPossibleSecrets = (length, base) => {
+  const key = `${length}-${base}`;
+  if (memoizedCount.has(key)) {
+    return memoizedCount.get(key);
+  }
+
+  const result = length === 0 ? 1 : countPossibleSecrets(length - 1, base) * base;
+  memoizedCount.set(key, result);
+  return result;
+};
+
+export const isValidGuess = (guess, base) => {
+  const isDigit = createDigitValidator(base);
+  return guess.length > 0 && [...guess].every(isDigit);
+};
+
 const createInputElement = () => {
     const input = document.createElement('input');
     input.type = 'text';
@@ -58,38 +84,44 @@ const btn = createElem('button', 'new-game');
 btn.textContent = 'New Game';
 btn.addEventListener('click', () => {
     renderSetupScreen();
+    clearTimeout(id)
 });
 body.append(btn);
 const renderTitle = () => {
     const title = createElem('h1', undefined, 'title');
-    console.log(title);
     title.textContent = 'Bulls and Cows';
     container.append(title);
 };
 let currentSecret = '';
 let gameHistory = [];
+let base;
+let id;
 const startGame = () => {
     const baseSelect = document.getElementById('base-select');
     const lengthInput = document.getElementById('length-input');
-    const base = parseInt(baseSelect.value);
+    base = parseInt(baseSelect.value);
     const length = parseInt(lengthInput.value);
-    console.log(base, length);
     currentSecret = generateSecret(length, base);
-    gameHistory = [];
     renderGameScreen(currentSecret, gameHistory);
 };
 const checkGuess = (secret, history) => {
     const input = document.getElementById('guess-input');
     const guess = input.value;
-    if (guess.length === 0) {
-        alert('Пожалуйста, введите число');
+    console.log(isValidGuess(guess, base));
+    
+    if (!isValidGuess(guess, base)) {
+        const chars = '0123456789abcdef'.slice(0, base);
+        const message = createElem('p')
+        message.textContent = `Пожалуйста, введите число c соответствием с основнием, основние ${base} - символы ${chars}`
+        container.querySelector('.title').after(message)
+        id = setTimeout(() => {
+            message.textContent = ''
+        },2000)
         return;
     }
-    if (guess.length !== secret.length) {
-        alert(`Число должно быть длиной ${secret.length} символов`);
-        return;
-    }
+    
     const result = evaluateGuess(guess, secret);
+
     history = [...history, {
             guess: guess,
             bulls: result.bulls,
@@ -133,6 +165,7 @@ export const renderGameScreen = (secret, history) => {
     container.appendChild(input);
     const submitButton = createButton('Check', () => {
         checkGuess(secret, history);
+        clearTimeout(id)
     });
     container.appendChild(submitButton);
     const historyList = createElem('ul', 'history-list');
