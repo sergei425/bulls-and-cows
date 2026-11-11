@@ -134,6 +134,11 @@ const renderSetupScreen = () => {
     renderTitle();
     const form = createElem('form', 'setup-form');
     container.append(form);
+    const div1 = createElem('div', undefined, 'wrapper')
+    const div2 = createElem('div', undefined, 'wrapper')
+    const labelSelect = createElem('label')
+    labelSelect.for = 'base-select'
+    labelSelect.textContent = 'Система счисления';
     const baseSelect = createElem('select', 'base-select');
     baseOptions.forEach((base) => {
         const option = createElem('option');
@@ -141,7 +146,12 @@ const renderSetupScreen = () => {
         option.value = base.toString();
         baseSelect.append(option);
     });
-    form.append(baseSelect);
+
+    form.append(div1, div2);
+    div1.append(labelSelect, baseSelect)
+    const inputLabel = createElem('label')
+    inputLabel.for = 'length-input';
+    inputLabel.textContent = 'Количество знаков';
     const lengthInput = createElem('input');
     lengthInput.type = 'number';
     lengthInput.id = 'length-input';
@@ -149,7 +159,7 @@ const renderSetupScreen = () => {
     lengthInput.min = '2';
     lengthInput.max = '6';
     lengthInput.placeholder = 'Number length (2-16)';
-    form.append(lengthInput);
+    div2.append(inputLabel, lengthInput);
     const startButton = createButton('Start Game', (evt) => {
         evt.preventDefault();
         startGame();
